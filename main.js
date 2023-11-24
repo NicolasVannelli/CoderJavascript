@@ -21,9 +21,17 @@ function inicilizar() {
         switch (options) {
             case "A":
                 AgregarPaciente()
+                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
+                if(ejecutar===false){
+                    alert("Saliendo, gracias por utilizar nuestra aplicación")
+                }
                 break
             case "B":
                 Filtrar()
+                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
+                if(ejecutar===false){
+                    alert("Saliendo, gracias por utilizar nuestra aplicación")
+                }
                 break
             case "Q":
                 alert("Funcion en desarrollo")
@@ -67,5 +75,4 @@ function Filtrar(){
     }
 
 }
-
 inicilizar()
