@@ -1,108 +1,77 @@
-// Que tengo que hacer
-//Agregar Pacientes  *
-//Mostrar Pacientes  *
-//Eliminar Pacientes *
-//Agregar un cambio de datos de pacientes por algun error con el metodo splice
+let respuesta = document.getElementById("ValorPacientes")
 
+let boton = document.getElementById("AgregarPaciente")
 
+let resultado = document.getElementById("resultado")
 
-const Paciente = function (nombre, edad, sangre) {
-    this.nombre = nombre
-    this.edad = edad
-    this.sangre = sangre
-}
+window.onload = function(){
+    let ValorGuardado = localStorage.getItem("PacienteGuardado")
 
-let pacientes = []
-
-
-function inicilizar() {
-    let ejecutar = confirm("¿Quiere utilizar esta aplicación?")
-    while (ejecutar) {
-        let options = prompt("A para agregar paciente, B para buscar paciente, Q para quitar paciente, M para mostrar pacientes y S para salir").toUpperCase()
-        //Esto seria el menú de opciones, a medida que se agregen mas puedo poner otro case 
-        switch (options) {
-            case "A":
-                AgregarPaciente()
-                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
-                if(ejecutar===false){
-                    alert("Saliendo, gracias por utilizar nuestra aplicación")
-                }
-                break
-            case "B":
-                Filtrar()
-                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
-                if(ejecutar===false){
-                    alert("Saliendo, gracias por utilizar nuestra aplicación")
-                }
-                break
-            case "Q":
-                EliminarPaciente()
-                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
-                if(ejecutar===false){
-                    alert("Saliendo, gracias por utilizar nuestra aplicación")
-                }
-                break
-            case "S":
-                alert("Saliendo, gracias por utilizar nuestra aplicación")
-                ejecutar = false
-                break
-            case "M":
-                console.table(pacientes)
-                ejecutar=confirm("¿Desea seguir utilizando la aplicación?")
-                if(ejecutar===false){
-                    alert("Saliendo, gracias por utilizar nuestra aplicación")
-                }
-                break
-            default:
-                alert("Opción invalida")
-
-        }
-    }
-}
-function AgregarPaciente() {
-    let nombre = prompt("Ingrese el nombre de la persona").toUpperCase()
-    let edad = prompt("¿Cuál es su edad?")
-    let sangre = prompt("¿Cuál es el tipo de sangre?").toUpperCase()
-    let add = new Paciente(nombre, edad, sangre)
-    pacientes.push(add)
-    alert("¡Los datos han sido ingresados con éxito!")
-    console.table(pacientes)
-}
-function Filtrar(){
-    let filtrado = prompt("¿Que datos estás buscando?").toLowerCase()
-    switch (filtrado){
-        case "sangre":
-            let resultadosangre = pacientes.filter((x) => x.sangre.toLowerCase().includes(filtrado))
-            console.table(resultadosangre)
-            break
-        case "nombre":
-            let resultadonombre = pacientes.filter((x) => x.nombre.toLowerCase().includes(filtrado))
-            console.table(resultadonombre)
-            break
-        case "edad":
-            let resultadoedad = pacientes.filter((x) => x.edad.toLowerCase().includes(filtrado))
-            console.table(resultadoedad)
-            break
-        default:
-            alert("Opción invalida")
-    }
-
-}
-function EliminarPaciente(){
-    let buscar = prompt("¿A quién quiere eliminar?").toUpperCase()
-    let resultado= pacientes.filter((x) => x.nombre.toUpperCase().includes(buscar))
-    if (resultado.length > 0) {
-                    //Esto es para obtener el primer indice que coincida con la busqueda
-        let pacienteAEliminar = pacientes.indexOf(resultado[0])
-
-        if (pacienteAEliminar !== -1) {
-            //Aca utilizo el splice para eliminar el indice anteriormente obtenido,el 1 significa la cantidad de elementos a eliminar
-            pacientes.splice(pacienteAEliminar, 1)
-            console.table(pacientes)
-        } else {
-            console.log("Paciente no encontrado en la lista.")
-        }
+    if (ValorGuardado) {
+        ListaPacientes = JSON.parse(ValorGuardado);
+        MostrarPacientes();
     }
 }
 
-inicilizar()
+boton.addEventListener("click",function(){
+    let valorinput = respuesta.value;
+    
+    // Verificamos si la tarea ya existe en la lista
+    if (!existeTareaEnLista(valorinput)) {
+        // Si no existe, creamos un objeto tarea
+        let pacientes = {
+            tarea: valorinput,
+            fecha: new Date().toLocaleString()
+        };
+
+        // Agregamos la tarea al array ListaTareas
+        ListaPacientes.push(pacientes);
+
+        // Mostramos y almacenamos las tareas
+        MostrarPacientes();
+        guardarEnLocalStorage();
+    } else {
+        alert("La tarea ya existe en la lista.");
+    }
+
+    resultado.innerHTML = `Paciente: ${IngresoPaciente.Paciente},<br>Fecha de ingreso: ${IngresoPaciente.Fecha}`;
+
+    localStorage.setItem("PacienteGuardado",valorinput)
+    
+    
+    respuesta.value = ""
+
+
+})
+
+function MostrarPacientes() {
+    resultado.innerHTML = "";
+    if (pacientes.length > 0) {
+        resultado.innerHTML += "<ul>";
+        ListaPacientes.forEach(function (tarea) {
+            resultado.innerHTML += `<li>Tarea: ${tarea.tarea}, Fecha: ${tarea.fecha}</li>`;
+        });
+        resultado.innerHTML += "</ul>";
+    }
+}
+function MostrarPacientesFiltrados(pacientes) {
+    resultado2.innerHTML = "";
+    if (pacientes.length > 0) {
+        resultado2.innerHTML += "<ul>";
+        tareas.forEach(function (pacientes) {
+            resultado2.innerHTML += `<li>Paciente: ${tarea.tarea},<br>Fecha de ingreso: ${tarea.fecha}</li>`;
+        });
+        resultado2.innerHTML += "</ul>";
+    } else {
+        resultado2.innerHTML = "No se encontraron pacientes que coincidan con la búsqueda.";
+    }
+}
+function guardarEnLocalStorage() {
+    localStorage.setItem("Pacienteguardado", JSON.stringify(ListaTareas));
+}
+// Función para verificar si la tarea ya existe en la lista
+function existeTareaEnLista(valorTarea) {
+    return ListaPacientes.some(function (tarea) {
+        return tarea.tarea.toLowerCase() === valorTarea.toLowerCase();
+    });
+}
