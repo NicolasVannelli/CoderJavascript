@@ -1,77 +1,46 @@
-let respuesta = document.getElementById("ValorPacientes")
+const Paciente = function(Nombre,Apellido,DNI){
+    this.nombre = Nombre
+    this.apellido = Apellido
+    this.dni = DNI
+}
+let boludo1 = new Paciente("Nicolas","Vannelli",123)
+let pacientes = [boludo1]
 
-let boton = document.getElementById("AgregarPaciente")
+if (localStorage.getItem("paciente")){
+    pacientes = JSON.parse(localStorage.getItem("paciente"))
+}else{
+    pacientes = pacientes
+}
 
-let resultado = document.getElementById("resultado")
+function FiltrarPaciente(){
+    const body = document.querySelector("body")
+    const input = document.getElementById("ValorDNI").value
+    const palabraClave = input
+    const filtrado = pacientes.filter((paciente)=>paciente.nombre.includes(palabraClave))
+    if (filtrado.length > 0){
+        const container = document.getElementById("fila")
+        filtrado.forEach((paciente)=>{
+            const card = document.createElement("tr")
+        
+            const nombre = document.createElement("td")
+        nombre.textContent = paciente.nombre
+        card.appendChild(nombre)
+        
+        const apellido = document.createElement("td")
+        apellido.textContent = paciente.apellido
+        card.appendChild(apellido)
 
-window.onload = function(){
-    let ValorGuardado = localStorage.getItem("PacienteGuardado")
+        const dni = document.createElement("td")
+        dni.textContent = paciente.dni
+        card.appendChild(dni)
 
-    if (ValorGuardado) {
-        ListaPacientes = JSON.parse(ValorGuardado);
-        MostrarPacientes();
+        container.appendChild(card)
+        })
+
+    }else{
+        alert("No hay")
     }
 }
 
-boton.addEventListener("click",function(){
-    let valorinput = respuesta.value;
-    
-    // Verificamos si la tarea ya existe en la lista
-    if (!existeTareaEnLista(valorinput)) {
-        // Si no existe, creamos un objeto tarea
-        let pacientes = {
-            tarea: valorinput,
-            fecha: new Date().toLocaleString()
-        };
-
-        // Agregamos la tarea al array ListaTareas
-        ListaPacientes.push(pacientes);
-
-        // Mostramos y almacenamos las tareas
-        MostrarPacientes();
-        guardarEnLocalStorage();
-    } else {
-        alert("La tarea ya existe en la lista.");
-    }
-
-    resultado.innerHTML = `Paciente: ${IngresoPaciente.Paciente},<br>Fecha de ingreso: ${IngresoPaciente.Fecha}`;
-
-    localStorage.setItem("PacienteGuardado",valorinput)
-    
-    
-    respuesta.value = ""
-
-
-})
-
-function MostrarPacientes() {
-    resultado.innerHTML = "";
-    if (pacientes.length > 0) {
-        resultado.innerHTML += "<ul>";
-        ListaPacientes.forEach(function (tarea) {
-            resultado.innerHTML += `<li>Tarea: ${tarea.tarea}, Fecha: ${tarea.fecha}</li>`;
-        });
-        resultado.innerHTML += "</ul>";
-    }
-}
-function MostrarPacientesFiltrados(pacientes) {
-    resultado2.innerHTML = "";
-    if (pacientes.length > 0) {
-        resultado2.innerHTML += "<ul>";
-        tareas.forEach(function (pacientes) {
-            resultado2.innerHTML += `<li>Paciente: ${tarea.tarea},<br>Fecha de ingreso: ${tarea.fecha}</li>`;
-        });
-        resultado2.innerHTML += "</ul>";
-    } else {
-        resultado2.innerHTML = "No se encontraron pacientes que coincidan con la búsqueda.";
-    }
-}
-function guardarEnLocalStorage() {
-    localStorage.setItem("Pacienteguardado", JSON.stringify(ListaTareas));
-}
-// Función para verificar si la tarea ya existe en la lista
-function existeTareaEnLista(valorTarea) {
-    return ListaPacientes.some(function (tarea) {
-        return tarea.tarea.toLowerCase() === valorTarea.toLowerCase();
-    });
-}
+const BotonFiltrar = document.getElementById("FiltrarPaciente")
+BotonFiltrar.addEventListener("click",FiltrarPaciente)
