@@ -19,20 +19,34 @@
 <body>
     <h1>BePatient</h1>
     
-    <label for="ValorPacientes"></label>
-    <input type="text" id="ValorPacientes">
+    <div class="botones">
+
     <button id="AgregarPaciente">Agregar paciente</button>
-
-    <div id="resultado"></div>
+    <button id="FiltrarPaciente">Filtrar paciente</button>
+    <button id="EliminarPaciente">Eliminar paciente</button>
     
-    <h2>Buscador</h2>
+    </div>
 
-    <label for="BuscadorPacientes">Ingrese nombre</label>
-    <input type="text" id="BuscadorPacientes" placeholder="Ingrese un paciente">
-    <button id="BuscarPaciente">Buscar paciente</button>
+    <label for="ValorDNI">Ingrese valores</label>
+    <input type="text" id="ValorDNI" placeholder="Ingrese el DNI">
 
-    <div id="resultado2"></div>
-
+    <h1>Pacientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Fecha de nacimiento</th>
+            </tr>
+        </thead>
+        <tbody id="fila"">
+                <!-- los td son los datos del paciente-->
+                
+            <!--tengo que crear un tr para cada paciente-->
+        </tbody>
+    </table>
+   
     <script src="main.js"></script>
 </body>
 </html>
