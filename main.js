@@ -4,15 +4,11 @@ const Paciente = function(Nombre,Apellido,DNI,Fecha){
     this.dni = DNI
     this.fecha=Fecha
 }
-let boludo1 = new Paciente("Nicolas","Vannelli","321","13/01/2001")
-let boludo3 = new Paciente("Mercedes","Rodriguez","456","5/11/1997")
-let boludo2 = new Paciente("Gino","Vannelli","789","21/11/2012")
-let boludo4 = new Paciente("Celina","Vannelli","123","01/01/1999")
 
-let pacientes = [boludo1,boludo2,boludo3,boludo4]
+let pacientes = []
 
-if (localStorage.getItem("paciente")){
-    pacientes = JSON.parse(localStorage.getItem("paciente"))
+if (localStorage.getItem("pacientes")){
+    pacientes = JSON.parse(localStorage.getItem("pacientes"))
 }else{
     pacientes = pacientes
 }
@@ -73,7 +69,7 @@ function AgregarPaciente(){
         const nombreInput = document.getElementById("nombre-input").value.trim()
         const apellidoInput = document.getElementById("apellido-input").value.trim()
         const dniInput = document.getElementById("dni-input").value.trim()
-        const fechaInput = parseInt(document.getElementById("fecha-input").value)
+        const fechaInput =document.getElementById("fecha-input").value
 
         if(nombreInput === "" || apellidoInput === "" || isNaN(dniInput) || isNaN(fechaInput) ){
             alert("Ingrese los datos")
@@ -91,38 +87,53 @@ function AgregarPaciente(){
 
         localStorage.setItem("pacientes", JSON.stringify(pacientes))
 
-        alert(`se agregó el paciente ${paciente.nombre} a la lista`)
-
-        const container = document.createElement("div")
-        
-       pacientes.forEach((x)=>{
-            const card = document.createElement("tr")
-        
-            const nombre = document.createElement("td")
-        nombre.textContent = paciente.nombre
-        card.appendChild(nombre)
-        
-        const apellido = document.createElement("td")
-        apellido.textContent = paciente.apellido
-        card.appendChild(apellido)
-
-        const dni = document.createElement("td")
-        dni.textContent = paciente.dni
-        card.appendChild(dni)
-
-        const fecha = document.createElement("td")
-        fecha.textContent = paciente.fecha
-        card.appendChild(fecha)
-
-        container.appendChild(card)
-        })
-        const body = document.querySelector("body")
-        body.appendChild(container)
-        
-        form.reset()
+        alert(`se agregó el paciente ${paciente.nombre} a la lista`)      
     })
     const body = document.querySelector("body")
     body.appendChild(form)
+}
+
+function EliminarPaciente() {
+    const form = document.createElement("form");
+    form.innerHTML = `
+    <label for ="nombre-entrada">Nombre:</label>
+    <input id= "nombre-entrada" type="text" required>
+    
+    <label for ="apellido-entrada">Apellido:</label>
+    <input id= "apellido-entrada" type="text" required>
+    
+    <label for ="dni-entrada">DNI:</label>
+    <input id= "dni-entrada" type="text" required>
+    
+    <button type="submit">Eliminar</button>`;
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault()
+        const nombreEntrada = document.getElementById("nombre-entrada").value.trim()
+        const apellidoEntrada = document.getElementById("apellido-entrada").value.trim()
+        const dniEntrada = document.getElementById("dni-entrada").value.trim()
+
+        if (nombreEntrada === "" || apellidoEntrada === "" || isNaN(dniEntrada)) {
+            alert("Ingrese los datos")
+            return;
+        }
+
+        const PacienteEliminado = new Paciente(nombreEntrada, apellidoEntrada, dniEntrada)
+        
+        let resultado = pacientes.find((x) => x.dni === PacienteEliminado.dni)
+
+        if (resultado) {
+            
+            let indiceAEliminar = pacientes.indexOf(resultado)
+            pacientes.splice(indiceAEliminar, 1)
+            alert("Paciente eliminado")
+        } else {
+            alert("Paciente no encontrado")
+        }
+    })
+
+    const body = document.querySelector("body");
+    body.appendChild(form);
 }
 
 const BotonFiltrar = document.getElementById("FiltrarPaciente")
@@ -130,3 +141,6 @@ BotonFiltrar.addEventListener("click",()=>{FiltrarPaciente()})
 
 const BotonAgregar = document.getElementById("AgregarPaciente")
 BotonAgregar.addEventListener("click",()=>{AgregarPaciente()})
+
+const BotonEliminar = document.getElementById("EliminarPaciente")
+BotonEliminar.addEventListener("click",()=>{EliminarPaciente()})
