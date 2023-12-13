@@ -13,6 +13,7 @@ if (localStorage.getItem("pacientes")){
     pacientes = pacientes
 }
 
+
 function FiltrarPaciente(){
     const input = document.getElementById("ValorDNI").value
     const palabraClave = input
@@ -50,19 +51,15 @@ function AgregarPaciente(){
 
     const form = document.createElement("form")
     form.innerHTML=`
-    <label for ="nombre-input">Nombre:</label>
-    <input id= "nombre-input" type="text" required>
+    <input id= "nombre-input" type="text" placeholder="Ingrese el nombre" required>
     
-    <label for ="apellido-input">Apellido:</label>
-    <input id= "apellido-input" type="text" required>
+    <input id= "apellido-input" type="text" placeholder="Ingrese el apellido" required>
     
-    <label for ="dni-input">DNI:</label>
-    <input id= "dni-input" type="text" required>
+    <input id= "dni-input" type="text" placeholder="Ingrese el DNI" required>
     
-    <label for ="fecha-input">Fecha de nacimiento:</label>
-    <input id= "fecha-input" type="date" required>
+    <input id= "fecha-input" type="date" required><br>
     
-    <button type="submit">Agregar</button>`
+    <div class="botones"><button type="submit">Agregar</button></div>`
     
     form.addEventListener("submit", function(e){
         e.preventDefault();
@@ -70,15 +67,10 @@ function AgregarPaciente(){
         const apellidoInput = document.getElementById("apellido-input").value.trim()
         const dniInput = document.getElementById("dni-input").value.trim()
         const fechaInput =document.getElementById("fecha-input").value
-
-        if(nombreInput === "" || apellidoInput === "" || isNaN(dniInput) || isNaN(fechaInput) ){
-            alert("Ingrese los datos")
-            return
-        }
-
+      
         const paciente = new Paciente(nombreInput, apellidoInput, dniInput, fechaInput)
 
-        if (pacientes.some( (x)=> x.nombre===paciente.nombre)){
+        if (pacientes.some( (x)=> x.dni===paciente.dni)){
         alert("El paciente ya existe")
         return
         }
@@ -96,16 +88,13 @@ function AgregarPaciente(){
 function EliminarPaciente() {
     const form = document.createElement("form");
     form.innerHTML = `
-    <label for ="nombre-entrada">Nombre:</label>
-    <input id= "nombre-entrada" type="text" required>
+    <input id= "nombre-entrada" type="text" placeholder="Ingrese el nombre" required>
     
-    <label for ="apellido-entrada">Apellido:</label>
-    <input id= "apellido-entrada" type="text" required>
+    <input id= "apellido-entrada" type="text" placeholder="Ingrese el apellido" required>
     
-    <label for ="dni-entrada">DNI:</label>
-    <input id= "dni-entrada" type="text" required>
+    <input id= "dni-entrada" type="text" placeholder="Ingrese el DNI" required><br>
     
-    <button type="submit">Eliminar</button>`;
+    <div class="botones"><button type="submit">Eliminar</button></div>`
 
     form.addEventListener("submit", function (e) {
         e.preventDefault()
