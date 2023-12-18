@@ -13,6 +13,33 @@ if (localStorage.getItem("pacientes")){
     pacientes = pacientes
 }
 
+let pagina = document.body.innerHTML
+
+function MostrarPaciente(){
+    const container = document.getElementById("fila")
+    pacientes.forEach((paciente)=>{
+        const card = document.createElement("tr")
+
+        const nombre = document.createElement("td")
+    nombre.textContent = paciente.nombre
+    card.appendChild(nombre)
+
+    const apellido = document.createElement("td")
+    apellido.textContent = paciente.apellido
+    card.appendChild(apellido)
+
+    const dni = document.createElement("td")
+    dni.textContent = paciente.dni
+    card.appendChild(dni)
+
+    const fecha = document.createElement("td")
+    fecha.textContent = paciente.fecha
+    card.appendChild(fecha)
+
+    container.appendChild(card)
+})
+}
+
 
 function FiltrarPaciente(){
     const input = document.getElementById("ValorDNI").value
@@ -20,6 +47,7 @@ function FiltrarPaciente(){
     const filtrado = pacientes.filter((paciente)=>paciente.dni.includes(palabraClave))
     if (filtrado.length > 0){
         const container = document.getElementById("fila")
+        container.innerHTML=""
         filtrado.forEach((paciente)=>{
             const card = document.createElement("tr")
         
@@ -48,9 +76,12 @@ function FiltrarPaciente(){
 }
 
 function AgregarPaciente(){
-
+    const body = document.getElementById("body")
+    while (document.body.firstChild){
+        document.body.removeChild(document.body.firstChild)
+    }
     const form = document.createElement("form")
-    form.innerHTML=`
+    form.innerHTML=`<div class="datos">
     <input id= "nombre-input" type="text" placeholder="Ingrese el nombre" required>
     
     <input id= "apellido-input" type="text" placeholder="Ingrese el apellido" required>
@@ -58,8 +89,9 @@ function AgregarPaciente(){
     <input id= "dni-input" type="text" placeholder="Ingrese el DNI" required>
     
     <input id= "fecha-input" type="date" required><br>
-    
-    <div class="botones"><button type="submit">Agregar</button></div>`
+    </div>
+    <div class="botones"><button type="submit">Agregar</button></div>
+    `
     
     form.addEventListener("submit", function(e){
         e.preventDefault();
@@ -79,9 +111,10 @@ function AgregarPaciente(){
 
         localStorage.setItem("pacientes", JSON.stringify(pacientes))
 
-        alert(`se agregó el paciente ${paciente.nombre} a la lista`)      
+        alert(`se agregó el paciente ${paciente.nombre} a la lista`)
+        document.body.innerHTML=pagina  
     })
-    const body = document.querySelector("body")
+
     body.appendChild(form)
 }
 
@@ -133,3 +166,6 @@ BotonAgregar.addEventListener("click",()=>{AgregarPaciente()})
 
 const BotonEliminar = document.getElementById("EliminarPaciente")
 BotonEliminar.addEventListener("click",()=>{EliminarPaciente()})
+
+const BotonMostrar = document.getElementById("MostrarPaciente")
+BotonMostrar.addEventListener("click",()=>{MostrarPaciente()})
