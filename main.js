@@ -112,10 +112,13 @@ function AgregarPaciente(){
         localStorage.setItem("pacientes", JSON.stringify(pacientes))
 
         alert(`se agregó el paciente ${paciente.nombre} a la lista`)
-        document.body.innerHTML=pagina  
+        document.body.innerHTML=pagina 
+        
+        Eventos()
     })
 
     body.appendChild(form)
+
 }
 
 function EliminarPaciente() {
@@ -158,14 +161,19 @@ function EliminarPaciente() {
     body.appendChild(form);
 }
 
-const BotonFiltrar = document.getElementById("FiltrarPaciente")
-BotonFiltrar.addEventListener("click",()=>{FiltrarPaciente()})
+function Eventos(){
+    const BotonFiltrar = document.getElementById("FiltrarPaciente")
+    BotonFiltrar.addEventListener("click",()=>{FiltrarPaciente()})
 
-const BotonAgregar = document.getElementById("AgregarPaciente")
-BotonAgregar.addEventListener("click",()=>{AgregarPaciente()})
+    const BotonAgregar = document.getElementById("AgregarPaciente")
+    BotonAgregar.addEventListener("click",()=>{AgregarPaciente()})
 
-const BotonEliminar = document.getElementById("EliminarPaciente")
-BotonEliminar.addEventListener("click",()=>{EliminarPaciente()})
+    const BotonEliminar = document.getElementById("EliminarPaciente")
+    BotonEliminar.addEventListener("click",()=>{EliminarPaciente()})
 
-const BotonMostrar = document.getElementById("MostrarPaciente")
-BotonMostrar.addEventListener("click",()=>{MostrarPaciente()})
+    const BotonMostrar = document.getElementById("MostrarPaciente")
+    BotonMostrar.addEventListener("click",()=>{MostrarPaciente()})
+}
+
+
+Eventos()
