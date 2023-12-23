@@ -1,23 +1,17 @@
-<!-- Agregar para agregar invitado -->
-<!-- Agregar para filtar -->
-<!-- Agregar para eliminar pacientes -->
-<!-- Que el filtrado sea mejor -->
-<!-- Cuando ingresó el paciente-->
-<!-- Patologia-->
-<!-- Fecha de nacimiento-->
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BePatient</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body id="body">
-    <img id="logo" src="./logo.png" alt="logo">
+    <img id="logo" src="./assets/logo.png" alt="logo">
     <h1>BePatient</h1>
     
     <div class="botones">
@@ -41,13 +35,25 @@
                 <th>Fecha de nacimiento</th>
             </tr>
         </thead>
-        <tbody id="fila"">
-                <!-- los td son los datos del paciente-->
-                
-            <!--tengo que crear un tr para cada paciente-->
+        <tbody id="fila">
         </tbody>
     </table>
-   
+
+    <div id="recursos">
+        
+    </div>
+    <div id="contenedor">
+        <div id="clima">
+            <h5 id="ciudad"></h5>
+            <img id="icono" src="" alt="icono">
+            <h5 id="temperatura"></h5>
+            <h5 id="viento"></h%>
+
+        </div>
+    </div>
+
     <script src="main.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 </html>
