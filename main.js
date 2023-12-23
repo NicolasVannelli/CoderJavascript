@@ -116,7 +116,21 @@ function agregarPaciente() {
         const fechaInput = document.getElementById("fecha-input").value
 
         const paciente = new Paciente(nombreInput, apellidoInput, dniInput, fechaInput)
-
+        if(nombreInput=="" || apellidoInput=="" || isNaN(dniInput) || isNaN(fechaInput)){
+            Toastify({
+                text: "Ingrese los datos",
+                duration: 2000,
+                close: false,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    background: "linear-gradient(to right, #b30000, #ff4d4f)",
+                },
+                onClick: function () { }
+            }).showToast();
+            return
+        }
         if (pacientes.some((x) => x.dni === paciente.dni)) {
             Toastify({
                 text: "El paciente ya existe",
