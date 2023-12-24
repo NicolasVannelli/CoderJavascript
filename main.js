@@ -182,7 +182,18 @@ function eliminarPaciente() {
         const dniEntrada = document.getElementById("dni-entrada").value.trim()
 
         if (nombreEntrada === "" || apellidoEntrada === "" || isNaN(dniEntrada)) {
-            alert("Ingrese los datos")
+            Toastify({
+                text: "Ingrese los datos",
+                duration: 2000,
+                close: false,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    background: "linear-gradient(to right, #b30000, #ff4d4f)",
+                },
+                onClick: function () { }
+            }).showToast();
             return;
         }
         const PacienteEliminado = new Paciente(nombreEntrada, apellidoEntrada, dniEntrada)
