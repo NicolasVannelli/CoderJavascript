@@ -116,7 +116,7 @@ function agregarPaciente() {
         const fechaInput = document.getElementById("fecha-input").value
 
         const paciente = new Paciente(nombreInput, apellidoInput, dniInput, fechaInput)
-        if(nombreInput=="" || apellidoInput=="" || isNaN(dniInput) || isNaN(fechaInput)){
+        if(nombreInput=="" || apellidoInput=="" || isNaN(dniInput)){
             Toastify({
                 text: "Ingrese los datos",
                 duration: 2000,
@@ -151,7 +151,18 @@ function agregarPaciente() {
 
         localStorage.setItem("pacientes", JSON.stringify(pacientes))
 
-        alert(`se agregó el paciente ${paciente.nombre} a la lista`)
+        Toastify({
+            text: "El paciente fue agregado",
+            duration: 2000,
+            close: false,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #b30000, #ff4d4f)",
+            },
+            onClick: function () { }
+        }).showToast();
         document.body.innerHTML = pagina
 
     })

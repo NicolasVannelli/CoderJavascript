@@ -1,4 +1,7 @@
-
+body{
+    background-image: url(./assets/iconos/fondo.jpg);
+    background-size: cover;
+}
 #logo{   
     height: 5%;
     width: 10%;
